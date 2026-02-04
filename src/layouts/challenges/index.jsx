@@ -19,6 +19,7 @@ const DarkSelect = styled(Select)({
   backgroundColor: "#0e1a3a !important",
   cursor: "pointer",
   width: "100%",
+  pointerEvents: "auto !important",
   "& .MuiSelect-select": {
     backgroundColor: "transparent !important",
     padding: "14px 14px",
@@ -27,16 +28,22 @@ const DarkSelect = styled(Select)({
     width: "100%",
     display: "flex",
     alignItems: "center",
+    pointerEvents: "auto !important",
   },
   "& .MuiOutlinedInput-input": {
     backgroundColor: "transparent !important",
     color: "white !important",
     cursor: "pointer",
     padding: "14px 14px",
+    pointerEvents: "auto !important",
   },
   "& .MuiInputBase-input": {
     color: "white !important",
     cursor: "pointer",
+    pointerEvents: "auto !important",
+  },
+  "& .MuiOutlinedInput-root": {
+    pointerEvents: "auto !important",
   },
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: "rgba(255, 255, 255, 0.1)",
@@ -55,7 +62,7 @@ const DarkSelect = styled(Select)({
   "& .MuiSvgIcon-root": {
     color: "white !important",
     cursor: "pointer",
-    pointerEvents: "none",
+    pointerEvents: "auto !important",
   },
   "& fieldset": {
     borderColor: "rgba(255, 255, 255, 0.1) !important",
@@ -100,6 +107,8 @@ function Challenges() {
   const [searchQuery, setSearchQuery] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [difficultyOpen, setDifficultyOpen] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
 
   // Mock challenges data - in production, this would come from API
   const challenges = [
@@ -206,13 +215,14 @@ function Challenges() {
             border: "1px solid rgba(255, 255, 255, 0.05)",
             marginBottom: "30px",
             borderRadius: "20px",
+            pointerEvents: "auto",
           }}
         >
-          <VuiBox p={3}>
-            <Grid container spacing={2} alignItems="center">
+          <VuiBox p={3} sx={{ pointerEvents: "auto" }}>
+            <Grid container spacing={2} alignItems="center" sx={{ pointerEvents: "auto" }}>
               {/* Search */}
-              <Grid item xs={12} md={5}>
-                <VuiBox display="flex" alignItems="center" sx={{ position: "relative" }}>
+              <Grid item xs={12} md={5} sx={{ pointerEvents: "auto" }}>
+                <VuiBox display="flex" alignItems="center" sx={{ position: "relative", pointerEvents: "auto" }}>
                   <IoSearchSharp
                     size="20px"
                     color="#7A8AA3"
@@ -250,22 +260,18 @@ function Challenges() {
               </Grid>
 
               {/* Difficulty Filter */}
-              <Grid item xs={12} sm={6} md={3}>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel 
-                    sx={{ 
-                      color: "white !important",
-                      "&.Mui-focused": { color: "#0075FF !important" },
-                      "&.MuiInputLabel-shrink": { color: "white !important" },
-                    }}
-                  >
-                    Difficulty
-                  </InputLabel>
+              <Grid item xs={12} sm={6} md={3} sx={{ pointerEvents: "auto" }}>
+                <FormControl fullWidth variant="outlined" sx={{ pointerEvents: "auto" }} onClick={() => setDifficultyOpen(!difficultyOpen)}>
                   <DarkSelect
+                    open={difficultyOpen}
+                    onOpen={() => setDifficultyOpen(true)}
+                    onClose={() => setDifficultyOpen(false)}
                     value={difficultyFilter}
                     onChange={(e) => setDifficultyFilter(e.target.value)}
-                    label="Difficulty"
                     MenuProps={darkMenuProps}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{ pointerEvents: "auto" }}
                   >
                     <MenuItem value="all">All Difficulties</MenuItem>
                     <MenuItem value="easy">Easy</MenuItem>
@@ -276,22 +282,18 @@ function Challenges() {
               </Grid>
 
               {/* Category Filter */}
-              <Grid item xs={12} sm={6} md={4}>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel 
-                    sx={{ 
-                      color: "white !important",
-                      "&.Mui-focused": { color: "#0075FF !important" },
-                      "&.MuiInputLabel-shrink": { color: "white !important" },
-                    }}
-                  >
-                    Category
-                  </InputLabel>
+              <Grid item xs={12} sm={6} md={4} sx={{ pointerEvents: "auto" }}>
+                <FormControl fullWidth variant="outlined" sx={{ pointerEvents: "auto" }} onClick={() => setCategoryOpen(!categoryOpen)}>
                   <DarkSelect
+                    open={categoryOpen}
+                    onOpen={() => setCategoryOpen(true)}
+                    onClose={() => setCategoryOpen(false)}
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    label="Category"
                     MenuProps={darkMenuProps}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{ pointerEvents: "auto" }}
                   >
                     <MenuItem value="all">All Categories</MenuItem>
                     <MenuItem value="Arrays">Arrays</MenuItem>
