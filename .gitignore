@@ -12,6 +12,11 @@
 /build
 /dist
 
+# Vite
+.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
 # environment variables (IMPORTANT: Keep all .env files private)
 .env
 .env.local
